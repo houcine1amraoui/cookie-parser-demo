@@ -17,6 +17,9 @@ app.get("/set-cookie", (req, res) => {
   res.cookie("userToken", "123456", {
     httpOnly: true, // Security: prevents JS access
     secure: false, // Set to true in HTTPS
+    expires: new Date(Date.now() + 60 * 1000), // 1 min from now
+    maxAge: 5 * 60 * 1000, // 5 mins
+    path: "/set-cookie", // will not sent to /protected
   });
   res.json({ message: "Cookie has been set!" });
 });
