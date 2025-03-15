@@ -7,18 +7,18 @@ app.use(express.json());
 app.use(cookieParser());
 
 // app.get("/", (req, res) => {
-//   res.set("Set-Cookie", `userToken=${123456}`);
+//   res.set("Set-Cookie", `sessionId=${123456}`);
 //   res.send("Vanilla Cookie");
 // });
 
 // Route to set a cookie
 app.get("/set-cookie", (req, res) => {
-  res.cookie("userToken", "123456", {
-    // httpOnly: true,
+  res.cookie("sessionId", "123456", {
     // httpOnly: true, // Security: +prevents JS access
     // secure: true, // Set to true in HTTPS
     // expires: new Date(Date.now() + 60 * 1000), // 1 min from now
     // maxAge: 5 * 60 * 1000, // 5 mins
+    sameSite: "strict",
     path: "/set-cookie", // will not sent to /protected
   });
   res.json({ message: "Cookie has been set!" });
@@ -26,8 +26,8 @@ app.get("/set-cookie", (req, res) => {
 
 // Route to check if cookie is received
 app.get("/protected", (req, res) => {
-  const token = req.cookies.userToken;
-  if (token) {
+  const sessionId = req.cookies.sessionId;
+  if (sessionId) {
     res.json({ message: "Cookie received!", token });
   } else {
     res.status(403).json({ message: "No cookie found!" });
