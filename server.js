@@ -7,18 +7,18 @@ app.use(express.json());
 app.use(cookieParser());
 
 // app.get("/", (req, res) => {
-//   const username = "mohamed-msila";
-//   res.set("Set-Cookie", `session=${username}`);
+//   res.set("Set-Cookie", `userToken=${123456}`);
 //   res.send("Vanilla Cookie");
 // });
 
 // Route to set a cookie
 app.get("/set-cookie", (req, res) => {
   res.cookie("userToken", "123456", {
-    httpOnly: true, // Security: prevents JS access
-    secure: false, // Set to true in HTTPS
-    expires: new Date(Date.now() + 60 * 1000), // 1 min from now
-    maxAge: 5 * 60 * 1000, // 5 mins
+    // httpOnly: true,
+    // httpOnly: true, // Security: +prevents JS access
+    // secure: true, // Set to true in HTTPS
+    // expires: new Date(Date.now() + 60 * 1000), // 1 min from now
+    // maxAge: 5 * 60 * 1000, // 5 mins
     path: "/set-cookie", // will not sent to /protected
   });
   res.json({ message: "Cookie has been set!" });
